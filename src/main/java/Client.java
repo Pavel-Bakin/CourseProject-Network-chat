@@ -20,6 +20,18 @@ public class Client {
             String userName = consoleReader.readLine();
             out.println(userName);
 
+            Thread receiveMessagesThread = new Thread(() -> {
+                try {
+                    String serverMessage;
+                    while ((serverMessage = in.readLine()) != null) {
+                        System.out.println(serverMessage);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            receiveMessagesThread.start();
+
             String message;
             while (true) {
                 message = consoleReader.readLine();
